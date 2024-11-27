@@ -48,6 +48,8 @@ return { -- Useful plugin to show you pending keybinds.
       { '<leader>s', group = '[S]earch' },
       { '<leader>w', group = '[W]orkspace' },
       { '<leader>t', group = '[T]oggle' },
+      { '<leader>x', group = 'Diagnostics' },
+      { '<leader>a', group = 'H[a]rpoon' },
       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
     },
   },

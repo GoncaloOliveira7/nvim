@@ -1,7 +1,7 @@
 -- Neo-tree is a Neovim plugin to browse the file system
 -- https://github.com/nvim-neo-tree/neo-tree.nvim
 
-return  {
+return {
   -- You can easily change to a different colorscheme.
   -- Change the name of the colorscheme plugin below, and then
   -- change the command in the config to whatever the name of that colorscheme is.
@@ -13,7 +13,7 @@ return  {
     -- Load the colorscheme here.
     -- Like many other themes, this one has different styles, and you could load
     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-    vim.cmd.colorscheme 'onedark'
+    -- vim.cmd.colorscheme 'onedark'
 
     -- You can configure highlights by doing something like:
     -- vim.cmd.hi 'Comment gui=none'
@@ -23,3 +23,4 @@ return  {
     style = 'light',
   },
 }
+
