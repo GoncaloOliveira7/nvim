@@ -1,4 +1,4 @@
-require("goncalo.core")
+require 'goncalo.core'
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -40,7 +40,7 @@ require('lazy').setup({
   { import = 'goncalo.plugins' },
   { import = 'goncalo.plugins.themes' },
   checker = {
-    enabled = true
+    enabled = true,
   },
   'tpope/vim-sleuth',
   {
