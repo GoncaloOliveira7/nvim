@@ -1,4 +1,4 @@
-return   { -- Highlight, edit, and navigate code
+return { -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
   build = ':TSUpdate',
   main = 'nvim-treesitter.configs', -- Sets main module to use for opts
@@ -29,6 +29,7 @@ return   { -- Highlight, edit, and navigate code
       'gowork',
       'gpg',
       'graphql',
+      'hcl',
       'html',
       'http',
       'java',
@@ -73,10 +74,10 @@ return   { -- Highlight, edit, and navigate code
     incremental_selection = {
       enable = true,
       keymaps = {
-        init_selection = "gnn", -- set to `false` to disable one of the mappings
-        node_incremental = "grn",
-        scope_incremental = "grc",
-        node_decremental = "grm",
+        init_selection = 'gnn', -- set to `false` to disable one of the mappings
+        node_incremental = 'grn',
+        scope_incremental = 'grc',
+        node_decremental = 'grm',
       },
     },
 
@@ -89,14 +90,14 @@ return   { -- Highlight, edit, and navigate code
 
         keymaps = {
           -- You can use the capture groups defined in textobjects.scm
-          ["af"] = "@function.outer",
-          ["if"] = "@function.inner",
-          ["ac"] = "@class.outer",
+          ['af'] = '@function.outer',
+          ['if'] = '@function.inner',
+          ['ac'] = '@class.outer',
           -- You can optionally set descriptions to the mappings (used in the desc parameter of
           -- nvim_buf_set_keymap) which plugins like which-key display
-          ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+          ['ic'] = { query = '@class.inner', desc = 'Select inner part of a class region' },
           -- You can also use captures from other query groups like `locals.scm`
-          ["as"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
+          ['as'] = { query = '@local.scope', query_group = 'locals', desc = 'Select language scope' },
         },
         -- You can choose the select mode (default is charwise 'v')
         --
@@ -122,6 +123,6 @@ return   { -- Highlight, edit, and navigate code
         include_surrounding_whitespace = true,
       },
     },
-
   },
 }
+
