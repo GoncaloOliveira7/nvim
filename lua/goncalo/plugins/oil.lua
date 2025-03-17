@@ -10,6 +10,7 @@ return {
         ['<C-l>'] = false,
         ['<C-k>'] = false,
         ['<C-j>'] = false,
+        ['<C-s>'] = false,
         -- ['<M-h>'] = 'actions.select_split',
       },
       view_options = {
