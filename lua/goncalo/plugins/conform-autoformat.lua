@@ -43,6 +43,7 @@ return {
       yaml = { 'prettierd' },
       markdown = { 'prettierd' },
       sh = { 'beautysh' },
+      eruby = { 'erb_format' },
     },
   },
 }
