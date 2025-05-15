@@ -42,6 +42,7 @@ return {
       json = { 'prettierd' },
       yaml = { 'prettierd' },
       markdown = { 'prettierd' },
+      sh = { 'beautysh' },
     },
   },
 }

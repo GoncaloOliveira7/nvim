@@ -57,11 +57,15 @@ return {
 
       defaults = {
         mappings = {
-          i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+          i = { ['<c-enter>'] = 'to_fuzzy_refine', ['<C-t>'] = require('telescope.actions.layout').toggle_preview },
         },
         file_ignore_patterns = {
           'node_modules',
         },
+
+        -- preview = {
+        --   hide_on_startup = true, -- hide previewer when picker starts
+        -- },
       },
       pickers = {
         colorscheme = {
