@@ -7,8 +7,12 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-vim.keymap.set('n', '<leader>xn', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic' })
-vim.keymap.set('n', '<leader>xp', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic' })
+vim.keymap.set('n', '<leader>xn', function()
+  vim.diagnostic.jump { count = 1, float = true }
+end, { desc = 'Go to next diagnostic' })
+vim.keymap.set('n', '<leader>xp', function()
+  vim.diagnostic.jump { count = -1, float = true }
+end, { desc = 'Go to previous diagnostic' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -36,8 +40,11 @@ vim.keymap.set('n', '<C-s>', '<Esc>:w<CR>')
 
 vim.keymap.set('i', '<C-s>', '<Esc>:w<CR>', { noremap = true })
 vim.keymap.set('n', '<leader>cr', '<cmd>TSToolsRemoveUnusedImports<CR>', { desc = 'Remove Unused Imports (TS only)' })
+vim.keymap.set('n', '<leader>co', '<cmd>TSToolsOrganizeImports<CR>', { desc = 'Sorts and Removes Unused imports (TS only)' })
 
 vim.keymap.del('n', 'grn')
 vim.keymap.del('n', 'gra')
 vim.keymap.del('n', 'grr')
 vim.keymap.del('n', 'gri')
+
+vim.keymap.set('v', 'y', 'ygv', { desc = 'Yank but stay in visual mode' })
