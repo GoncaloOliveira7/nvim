@@ -127,6 +127,14 @@ return {
         },
       }),
     })
+
+    -- require('lspconfig').markdown_oxide.setup {
+    vim.lsp.config('gdscript', {
+      -- Ensure that dynamicRegistration is enabled! This allows the LS to take into account actions like the
+      -- Create Unresolved File code action, resolving completions for unindexed code blocks, ...
+      capabilities = vim.tbl_deep_extend('force', capabilities, {}),
+    })
+
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
     --
@@ -163,6 +171,7 @@ return {
       -- ruby_lsp = {},
       -- solargraph = {},
       -- standardrb = {},
+      gdtoolkit = {},
       markdown_oxide = {},
       prettierd = {},
       eslint_d = {},

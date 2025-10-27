@@ -23,6 +23,7 @@ return { -- Highlight, edit, and navigate code
       'gitignore',
       'go',
       'goctl',
+      'godot_resource',
       'gomod',
       'gosum',
       'gotmpl',
@@ -125,4 +126,3 @@ return { -- Highlight, edit, and navigate code
     },
   },
 }
-
