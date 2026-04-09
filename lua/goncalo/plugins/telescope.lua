@@ -51,21 +51,37 @@ return {
 
     -- [[ Configure Telescope ]]
     -- See `:help telescope` and `:help telescope.setup()`
+
+    local function path_display(_, path)
+      local max_len = 75
+      if string.len(path) > max_len then
+        return ('... ' .. (string.sub(path, string.len(path) - max_len)))
+      else
+        return path
+      end
+    end
+
     require('telescope').setup {
       -- You can put your default mappings / updates / etc. in here
       --  All the info you're looking for is in `:help telescope.setup()`
 
       defaults = {
+        path_display = path_display,
+        layout_strategy = 'horizontal',
+        layout_config = {
+          horizontal = {
+            prompt_position = 'bottom',
+            width = { padding = 0 },
+            height = { padding = 0 },
+            preview_width = 0.5,
+          },
+        },
         mappings = {
           i = { ['<c-enter>'] = 'to_fuzzy_refine', ['<C-t>'] = require('telescope.actions.layout').toggle_preview },
         },
         file_ignore_patterns = {
           'node_modules',
         },
-
-        -- preview = {
-        --   hide_on_startup = true, -- hide previewer when picker starts
-        -- },
       },
       pickers = {
         colorscheme = {

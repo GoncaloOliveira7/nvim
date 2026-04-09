@@ -44,6 +44,7 @@ return {
       markdown = { 'prettierd' },
       sh = { 'beautysh' },
       eruby = { 'erb_format' },
+      python = { 'black' },
     },
   },
 }
