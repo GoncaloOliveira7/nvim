@@ -6,6 +6,7 @@ vim.pack.add {
   'https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim',
   'https://github.com/j-hui/fidget.nvim',
   'https://github.com/j-hui/fidget.nvim',
+  'https://github.com/pmizio/typescript-tools.nvim',
 }
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -130,6 +131,22 @@ vim.lsp.config('lua_ls', {
   },
 })
 
+vim.lsp.enable 'basedpyright'
+
+require('typescript-tools').setup {
+  settings = {
+    tsserver_plugins = {
+      '@styled/typescript-styled-plugin',
+    },
+    tsserver_format_options = function()
+      return {
+        tabSize = 2,
+        indentSize = 2,
+      }
+    end,
+  },
+}
+
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
 --
@@ -160,6 +177,13 @@ local servers = {
   taplo = {}, -- toml
   terraformls = {},
   tflint = {},
+  isort = {},
+  basedpyright = {
+    analysis = {
+      autoSearchPaths = true,
+      diagnosticMode = 'openFilesOnly',
+    },
+  },
   -- gitlab_ci_ls = {},
   -- nginx_language_server = {},
   -- rubocop = {},

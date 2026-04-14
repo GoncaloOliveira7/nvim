@@ -34,3 +34,10 @@ vim.api.nvim_create_autocmd('FileType', {
     }
   end,
 })
+
+vim.api.nvim_create_autocmd({ 'User'  }, {
+  pattern = 'TelescopeFindPre',
+  callback = function()
+    vim.o.autocomplete = false
+  end,
+})

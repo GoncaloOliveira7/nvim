@@ -4,7 +4,7 @@ vim.pack.add { 'https://github.com/stevearc/conform.nvim' }
 vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = '*',
   callback = function(args)
-    require('conform').format { bufnr = args.buf }
+    require('conform').format { bufnr = args.buf, lsp_format = 'fallback' }
   end,
 })
 
@@ -14,7 +14,8 @@ end, { desc = '[F]ormat buffer' })
 
 require('conform').setup {
   opts = {
-    notify_on_error = false,
+    notify_on_error = true,
+    notify_no_formatters = true,
     format_on_save = function(bufnr)
       -- Disable "format_on_save lsp_fallback" for languages that don't
       -- have a well standardized coding style. You can add additional
@@ -27,24 +28,24 @@ require('conform').setup {
         lsp_format_opt = 'fallback'
       end
       return {
-        timeout_ms = 500,
+        timeout_ms = 5000,
         lsp_format = lsp_format_opt,
       }
     end,
     formatters_by_ft = {
+      python = { 'isort', 'black' },
       lua = { 'stylua' },
-      javascript = { 'prettierd' },
-      typescript = { 'prettierd' },
-      javascriptreact = { 'prettierd' },
-      typescriptreact = { 'prettierd' },
-      css = { 'prettierd' },
-      html = { 'prettierd' },
-      json = { 'prettierd' },
-      yaml = { 'prettierd' },
-      markdown = { 'prettierd' },
-      sh = { 'beautysh' },
-      eruby = { 'erb_format' },
-      python = { 'black' },
+      -- javascript = { 'prettierd' },
+      -- typescript = { 'prettierd' },
+      -- javascriptreact = { 'prettierd' },
+      -- typescriptreact = { 'prettierd' },
+      -- css = { 'prettierd' },
+      -- html = { 'prettierd' },
+      -- json = { 'prettierd' },
+      -- yaml = { 'prettierd' },
+      -- markdown = { 'prettierd' },
+      -- sh = { 'beautysh' },
+      -- eruby = { 'erb_format' },
     },
   },
 }
