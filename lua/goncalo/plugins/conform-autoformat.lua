@@ -27,7 +27,7 @@ return {
         lsp_format_opt = 'fallback'
       end
       return {
-        timeout_ms = 500,
+        timeout_ms = 5000,
         lsp_format = lsp_format_opt,
       }
     end,
@@ -44,7 +44,7 @@ return {
       markdown = { 'prettierd' },
       sh = { 'beautysh' },
       eruby = { 'erb_format' },
-      python = { 'black' },
+      python = { 'isort', 'black' },
     },
   },
 }
