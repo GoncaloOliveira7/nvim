@@ -1,4 +1,4 @@
-vim.pack.add { 'https://github.com/ sf echasnovski/mini.nvim' }
+vim.pack.add { 'https://github.com/nvim-mini/mini.nvim' }
 -- Better Around/Inside textobjects
 --
 -- Examples:
