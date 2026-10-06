@@ -17,18 +17,11 @@ require('which-key').setup {
     { '<leader>x', group = 'Diagnostics' },
     { '<leader>a', group = 'H[a]rpoon' },
     { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+    { 'gs', group = '[S]urround', mode = { 'n', 'x' } },
   },
 }
 
-require('which-key').register {
-  g = {
-    p = {
-      -- "p" makes sense, gv selects the last Visual selection, so this one
-      -- selects the last pasted text.
-      function()
-        vim.api.nvim_feedkeys('`[' .. vim.fn.strpart(vim.fn.getregtype(), 0, 1) .. '`]', 'n', false)
-      end,
-      'Switch to VISUAL using last paste/change',
-    },
-  },
-}
+-- "p" makes sense: gv selects the last Visual selection, so this one selects the last pasted text.
+vim.keymap.set('n', 'gp', function()
+  vim.api.nvim_feedkeys('`[' .. vim.fn.strpart(vim.fn.getregtype(), 0, 1) .. '`]', 'n', false)
+end, { desc = 'Switch to VISUAL using last paste/change' })

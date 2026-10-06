@@ -8,125 +8,100 @@ require('treesitter-context').setup {
   multiline_threshold = 1,
 }
 
-require('nvim-treesitter').setup {
-  ensure_installed = {
-    'bash',
-    'c',
-    'c_sharp',
-    'cmake',
-    'comment',
-    'css',
-    'csv',
-    'dockerfile',
-    'dot',
-    'gdscript',
-    'gdshader',
-    'git_config',
-    'git_rebase',
-    'gitattributes',
-    'gitcommit',
-    'gitignore',
-    'go',
-    'goctl',
-    'godot_resource',
-    'gomod',
-    'gosum',
-    'gotmpl',
-    'gowork',
-    'gpg',
-    'graphql',
-    'hcl',
-    'html',
-    'http',
-    'java',
-    'javascript',
-    'json',
-    'JSON',
-    'luadoc',
-    'lua',
-    'make',
-    'markdown',
-    'markdown_inline',
-    'nginx',
-    'ninja',
-    'python',
-    'regex',
-    'ruby',
-    'rust',
-    'scss',
-    'sql',
-    'ssh_config',
-    'terraform',
-    'tmux',
-    'tsx',
-    'toml',
-    'typescript',
-    'vim',
-    'vimdoc',
-    'yaml',
-  },
-  -- Autoinstall languages that are not installed
-  auto_install = true,
+-- NOTE: On the `main` branch, `require('nvim-treesitter').setup()` only accepts `install_dir`.
+-- Highlighting, indentation and auto-install for other filetypes are handled by
+-- config/autocmds/treesitter-autocmd.lua. Incremental selection no longer exists in nvim-treesitter.
+local ensure_installed = {
+  'bash',
+  'c',
+  'c_sharp',
+  'cmake',
+  'comment',
+  'css',
+  'csv',
+  'dockerfile',
+  'dot',
+  'gdscript',
+  'gdshader',
+  'git_config',
+  'git_rebase',
+  'gitattributes',
+  'gitcommit',
+  'gitignore',
+  'go',
+  'goctl',
+  'godot_resource',
+  'gomod',
+  'gosum',
+  'gotmpl',
+  'gowork',
+  'gpg',
+  'graphql',
+  'hcl',
+  'html',
+  'http',
+  'java',
+  'javascript',
+  'json',
+  'luadoc',
+  'lua',
+  'make',
+  'markdown',
+  'markdown_inline',
+  'nginx',
+  'ninja',
+  'python',
+  'regex',
+  'ruby',
+  'rust',
+  'scss',
+  'sql',
+  'ssh_config',
+  'terraform',
+  'tsx',
+  'toml',
+  'typescript',
+  'vim',
+  'vimdoc',
+  'yaml',
+}
 
-  highlight = {
-    enable = true,
-    -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-    --  If you are experiencing weird indenting issues, add the language to
-    --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-    additional_vim_regex_highlighting = { 'ruby' },
-  },
-  indent = { enable = true, disable = { 'ruby' } },
+-- Only kick off an (async) install for parsers that are missing
+local installed = require('nvim-treesitter').get_installed 'parsers'
+local missing = vim.tbl_filter(function(lang)
+  return not vim.tbl_contains(installed, lang)
+end, ensure_installed)
+if #missing > 0 then
+  require('nvim-treesitter').install(missing)
+end
 
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = 'gnn', -- set to `false` to disable one of the mappings
-      node_incremental = 'grn',
-      scope_incremental = 'grc',
-      node_decremental = 'grm',
+-- [[ Textobjects ]]
+-- See `:help nvim-treesitter-textobjects`
+require('nvim-treesitter-textobjects').setup {
+  select = {
+    -- Automatically jump forward to textobj, similar to targets.vim
+    lookahead = true,
+    selection_modes = {
+      ['@parameter.outer'] = 'v', -- charwise
+      ['@function.outer'] = 'v', -- charwise
+      ['@class.outer'] = '<c-v>', -- blockwise
     },
-  },
-
-  textobjects = {
-    select = {
-      enable = true,
-
-      -- Automatically jump forward to textobj, similar to targets.vim
-      lookahead = true,
-
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        -- You can optionally set descriptions to the mappings (used in the desc parameter of
-        -- nvim_buf_set_keymap) which plugins like which-key display
-        ['ic'] = { query = '@class.inner', desc = 'Select inner part of a class region' },
-        -- You can also use captures from other query groups like `locals.scm`
-        ['as'] = { query = '@local.scope', query_group = 'locals', desc = 'Select language scope' },
-      },
-      -- You can choose the select mode (default is charwise 'v')
-      --
-      -- Can also be a function which gets passed a table with the keys
-      -- * query_string: eg '@function.inner'
-      -- * method: eg 'v' or 'o'
-      -- and should return the mode ('v', 'V', or '<c-v>') or a table
-      -- mapping query_strings to modes.
-      selection_modes = {
-        ['@parameter.outer'] = 'v', -- charwise
-        ['@function.outer'] = 'v', -- linewise
-        ['@class.outer'] = '<c-v>', -- blockwise
-      },
-      -- If you set this to `true` (default is `false`) then any textobject is
-      -- extended to include preceding or succeeding whitespace. Succeeding
-      -- whitespace has priority in order to act similarly to eg the built-in
-      -- `ap`.
-      --
-      -- Can also be a function which gets passed a table with the keys
-      -- * query_string: eg '@function.inner'
-      -- * selection_mode: eg 'v'
-      -- and should return true or false
-      include_surrounding_whitespace = true,
-    },
+    -- Extend textobjects to include preceding or succeeding whitespace (like the built-in `ap`)
+    include_surrounding_whitespace = true,
   },
 }
+
+local select_textobject = require('nvim-treesitter-textobjects.select').select_textobject
+local textobjects = {
+  af = { '@function.outer', 'textobjects', 'Around function' },
+  ['if'] = { '@function.inner', 'textobjects', 'Inside function' },
+  ac = { '@class.outer', 'textobjects', 'Around class' },
+  ic = { '@class.inner', 'textobjects', 'Inside class' },
+  as = { '@local.scope', 'locals', 'Around language scope' },
+}
+for keys, spec in pairs(textobjects) do
+  local query, group, desc = spec[1], spec[2], spec[3]
+  vim.keymap.set({ 'x', 'o' }, keys, function()
+    select_textobject(query, group)
+  end, { desc = desc })
+end

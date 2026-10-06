@@ -1,5 +1,5 @@
 vim.pack.add { 'https://github.com/jpwol/thorn.nvim' }
 
--- require('lua.config.themes.thorn').setup {
+-- require('thorn').setup {
 --   background = 'warm',
 -- }

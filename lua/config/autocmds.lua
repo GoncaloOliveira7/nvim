@@ -1,100 +1,10 @@
-require 'config.autocmds.pack-autocmd'
+-- NOTE: config.autocmds.pack-autocmd is required early from config/init.lua
 require 'config.autocmds.treesitter-autocmd'
-
-vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('lsp_completion', { clear = true }),
-  callback = function(args)
-    local client_id = args.data.client_id
-    if not client_id then
-      return
-    end
-
-    local client = vim.lsp.get_client_by_id(client_id)
-    if client and client:supports_method 'textDocument/completion' then
-      -- Enable native LSP completion for this client + buffer
-      vim.lsp.completion.enable(true, client_id, args.buf, {
-        autotrigger = true, -- auto-show menu as you type (recommended)
-        -- You can also set { autotrigger = false } and trigger manually with <C-x><C-o>
-      })
-    end
-  end,
-})
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
     vim.hl.on_yank()
-  end,
-})
-
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'sh',
-  callback = function()
-    vim.lsp.start {
-      name = 'bash-language-server',
-      cmd = { 'bash-language-server', 'start' },
-    }
-  end,
-})
-
-vim.api.nvim_create_autocmd({ 'User' }, {
-  pattern = 'TelescopeFindPre',
-  callback = function()
-    vim.o.autocomplete = false
-  end,
-})
-
-local lint = require 'lint'
-vim.env.ESLINT_D_PPID = vim.fn.getpid()
-lint.linters_by_ft = {
-  -- markdown = { 'markdownlint' },
-  javascript = { 'eslint_d' },
-  typescript = { 'eslint_d' },
-  javascriptreact = { 'eslint_d' },
-  typescriptreact = { 'eslint_d' },
-  terraform = { 'tflint' },
-  -- svelte = { "eslint_d" },
-}
-
--- To allow other plugins to add linters to require('lint').linters_by_ft,
--- instead set linters_by_ft like this:
--- lint.linters_by_ft = lint.linters_by_ft or {}
--- lint.linters_by_ft['markdown'] = { 'markdownlint' }
---
--- However, note that this will enable a set of default linters,
--- which will cause errors unless these tools are available:
--- {
---   clojure = { "clj-kondo" },
---   dockerfile = { "hadolint" },
---   inko = { "inko" },
---   janet = { "janet" },
---   json = { "jsonlint" },
---   markdown = { "vale" },
---   rst = { "vale" },
---   ruby = { "ruby" },
---   terraform = { "tflint" },
---   text = { "vale" }
--- }
---
--- You can disable the default linters by setting their filetypes to nil:
--- lint.linters_by_ft['clojure'] = nil
--- lint.linters_by_ft['dockerfile'] = nil
--- lint.linters_by_ft['inko'] = nil
--- lint.linters_by_ft['janet'] = nil
--- lint.linters_by_ft['json'] = nil
--- lint.linters_by_ft['markdown'] = nil
--- lint.linters_by_ft['rst'] = nil
--- lint.linters_by_ft['ruby'] = nil
--- lint.linters_by_ft['terraform'] = nil
--- lint.linters_by_ft['text'] = nil
-
--- Create autocommand which carries out the actual linting
--- on the specified events.
-local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
-vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
-  group = lint_augroup,
-  callback = function()
-    lint.try_lint()
   end,
 })

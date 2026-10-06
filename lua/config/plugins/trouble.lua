@@ -1,7 +1,6 @@
 vim.pack.add { 'https://github.com/folke/trouble.nvim' }
 
-vim.keymap.set('n', '<C-l>', '<cmd>Trouble diagnostics toggle<cr>', { desc = 'Diagnostics (Trouble)' })
-
+-- NOTE: <C-l> is kept for window navigation (see keymaps.lua); use <leader>xx instead
 vim.keymap.set('n', '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', {
   desc = 'Diagnostics (Trouble)',
 })
