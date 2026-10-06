@@ -8,6 +8,8 @@ vim.pack.add {
   'https://github.com/pmizio/typescript-tools.nvim',
 }
 
+require('fidget').setup {}
+
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
   callback = function(event)
@@ -145,7 +147,6 @@ require('typescript-tools').setup {
     end,
   },
 }
-
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
 --
@@ -258,6 +259,9 @@ require('mason-lspconfig').setup {
   ensure_installed = {},
   handlers = {
     function(server_name)
+      if server_name == 'ts_ls' then
+        return
+      end
       local server = servers[server_name] or {}
       -- This handles overriding only values explicitly passed
       -- by the server configuration above. Useful when disabling

@@ -2,7 +2,10 @@
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
-require('vim._core.ui2').enable {}
+-- require('vim._core.ui2').enable {}
+
+vim.loader.enable()
+
 -- Make line numbers default
 vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
@@ -47,7 +50,7 @@ vim.o.timeoutlen = 300
 
 -- Configure how new splits should be opened
 vim.o.splitright = true
-vim.o.splitbelow = false
+vim.o.splitbelow = true
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
@@ -64,9 +67,14 @@ vim.o.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.o.scrolloff = 10
 
-vim.o.autocomplete = true
+vim.o.autocomplete = false
 vim.o.pumborder = 'rounded'
 vim.o.pummaxwidth = 40
 vim.o.completeopt = 'menu,menuone,noselect,nearest'
 
 vim.o.swapfile = false -- Disable swap files
+
+-- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
+-- instead raise a dialog asking if you wish to save the current file(s)
+-- See `:help 'confirm'`
+vim.o.confirm = true
