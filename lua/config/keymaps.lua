@@ -36,11 +36,9 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
-vim.keymap.set('n', '<C-s>', '<Esc>:w<CR>')
-
-vim.keymap.set('i', '<C-s>', '<Esc>:w<CR>', { noremap = true })
-vim.keymap.set('n', '<leader>cr', '<cmd>TSToolsRemoveUnusedImports<CR>', { desc = 'Remove Unused Imports (TS only)' })
-vim.keymap.set('n', '<leader>co', '<cmd>TSToolsOrganizeImports<CR>', { desc = 'Sorts and Removes Unused imports (TS only)' })
+vim.keymap.set('n', '<C-s>', '<cmd>w<CR>', { desc = 'Save file' })
+vim.keymap.set('i', '<C-s>', '<Esc><cmd>w<CR>', { desc = 'Save file' })
+-- <leader>cr / <leader>co (typescript-tools) are mapped per-buffer in plugins/lsp-config.lua
 
 vim.keymap.del('n', 'grn')
 vim.keymap.del('n', 'gra')

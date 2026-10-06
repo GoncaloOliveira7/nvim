@@ -31,11 +31,11 @@ require('lualine').setup {
       },
     },
     lualine_c = {},
-    lualine_d = {},
     lualine_x = {},
     lualine_z = {},
   },
   options = {
-    theme = 'onedark',
+    -- Follows the active colorscheme (auto-dark-mode switches between tokyonight and onedark)
+    theme = 'auto',
   },
 }

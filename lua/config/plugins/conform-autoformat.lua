@@ -1,12 +1,7 @@
 -- Autoformat
 vim.pack.add { 'https://github.com/stevearc/conform.nvim' }
 
-vim.api.nvim_create_autocmd('BufWritePre', {
-  pattern = '*',
-  callback = function(args)
-    require('conform').format { bufnr = args.buf, lsp_format = 'fallback' }
-  end,
-})
+-- Format on save is handled by conform's `format_on_save` option below
 
 vim.keymap.set('n', '<leader>f', function()
   require('conform').format { async = true, lsp_format = 'fallback' }

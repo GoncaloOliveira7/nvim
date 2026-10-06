@@ -4,8 +4,6 @@
 --  For more options, you can see `:help option-list`
 -- require('vim._core.ui2').enable {}
 
-vim.loader.enable()
-
 -- Make line numbers default
 vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.

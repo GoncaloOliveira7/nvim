@@ -1,4 +1,8 @@
-vim.pack.add { 'https://github.com/lukas-reineke/indent-blankline.nvim' }
+vim.pack.add {
+  'https://github.com/lukas-reineke/indent-blankline.nvim',
+  -- Required for the rainbow scope highlight (`scope_highlight_from_extmark` below)
+  'https://github.com/HiPhish/rainbow-delimiters.nvim',
+}
 -- Enable `lukas-reineke/indent-blankline.nvim`
 -- See `:help ibl`
 local highlight = {

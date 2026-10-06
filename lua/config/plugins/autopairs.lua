@@ -1,9 +1,12 @@
 vim.pack.add { 'https://github.com/windwp/nvim-autopairs' }
 
-vim.api.nvim_create_autocmd({ 'InsertEnter' }, {
+-- Set up lazily on the first InsertEnter only (`once = true`), so rules aren't re-added every time
+vim.api.nvim_create_autocmd('InsertEnter', {
+  once = true,
   callback = function()
     local npairs = require 'nvim-autopairs'
     local Rule = require 'nvim-autopairs.rule'
+    local ts_conds = require 'nvim-autopairs.ts-conds'
 
     npairs.setup {
       check_ts = true,
@@ -13,8 +16,6 @@ vim.api.nvim_create_autocmd({ 'InsertEnter' }, {
         java = false, -- don't check treesitter on java
       },
     }
-
-    local ts_conds = require 'nvim-autopairs.ts-conds'
 
     -- press % => %% only while inside a comment or string
     npairs.add_rules {
